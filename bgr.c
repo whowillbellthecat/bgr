@@ -59,7 +59,7 @@ I main(I argc, S* argv) {
 
 	signal(sigusr, handlesigusr);
 	srand(time(NULL));
-	
+
 	for (ureq = 1;;) {
 		n = updateimgs(files, t, n);
 		P(!n, EF(ERR("No files found in %s", t)));
