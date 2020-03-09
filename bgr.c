@@ -10,7 +10,7 @@ V daemonize() {
 		CSD(ES({}));
 	}
 }
-V usage() { ES(O("bgr [-vd] [-s seconds] path\n"));}
+V usage() { ES(O("bgr [-vd] [-c cmd] [-s seconds] path\n"));}
 V version() { ES(O("bgr v 1\n")); }
 
 S bstr(S str, ...) { /* cat arbitrary num of strings; va_list must be null terminated */
@@ -28,15 +28,16 @@ I updateimgs(IMG *f, S t, I c) { /*ureq being set implies either first run or go
 	R n;
 }
 I main(I argc, S* argv) {
-	I n = 0, fork = 1, rdelay = 10, logopt = 0; S fp, t; C ch; cS err;
+	I n = 0, fork = 1, rdelay = 10, logopt = 0; S fp, t, cmd; C ch; cS err;
 	X C *malloc_options;
 	malloc_options = "X";
 
-	while ((ch = getopt(argc, argv, "s:vdh")) != -1) {
+	while ((ch = getopt(argc, argv, "c:s:vdh")) != -1) {
 		SW(ch) {
 			CS('v', version());
 			CSW('d', fork = 0; logopt |= LOG_PERROR);
 			CSW('s', rdelay = strtonum(optarg, 1, INT_MAX, &err); P(err, EF(O("%s\n", err))));
+			CSW('c', cmd = optarg);
 			CSW('h', usage());
 			CSD(usage());
 		}
@@ -44,6 +45,7 @@ I main(I argc, S* argv) {
 	argc -= optind;
 	argv += optind;
 	P(--argc, usage());
+	P(!cmd, cmd = defaultcmd);
 	t = bstr(*argv, "/", NULL);
 
 	P(fork, daemonize());
@@ -62,7 +64,7 @@ I main(I argc, S* argv) {
 		n = updateimgs(files, t, n);
 		P(!n, EF(ERR("No files found in %s", t)));
 		fp = bstr(t, files[(rand() / (RAND_MAX / n))].name, NULL);
-		P(setbg(fp) < 0, EF({}));
+		P(setbg(fp, cmd) < 0, EF({}));
 		free(fp);
 		sleep(rdelay);
 	}
