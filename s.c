@@ -8,7 +8,7 @@ Z pid_t setbg(S img, S cmd) {
 	}
 	wait(&status);
 	ret = WEXITSTATUS(status) ? WIFEXITED(status) : WTERMSIG(status);
-	P(ret < 0, WARN("%s failed: %m with ret %d", cmd, ret));
+	P(ret != 0, WARN("%s exited with ret %d", cmd, ret));
 	R ret;
 }
 V handlesigusr(I sig) {
