@@ -3,7 +3,7 @@ volatile sig_atomic_t ureq; /* flag to propagate sigusr */
 Z pid_t setbg(S img, S cmd) {
 	I ret, status = 1;
 	SW(fork()) {
-		CS(0, ERR("%s", img); E(execl(cmd,cmd,img,NULL)));
+		CS(0, ERR("%s", img); E(execlp(cmd,cmd,img,NULL)));
 		CS(-1, EF(ERR("could not fork process: %m")));
 	}
 	wait(&status);
