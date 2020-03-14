@@ -3,7 +3,7 @@
 #include "f.c"
 #include "s.c"
 
-V usage() { ES(O("bgr [-vd] [-c cmd] [-s seconds] path\n"));}
+V usage() { ES(O("bgr [-d] [-c cmd] [-s seconds] path\n"));}
 S bstr(S str, ...) { /* cat arbitrary num of strings; va_list must be null terminated */
 	I l; S buf;
 	VA(str, l=1+strlen(str), l+=strlen(p), S);
