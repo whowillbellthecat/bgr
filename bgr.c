@@ -39,7 +39,7 @@ I main(I argc, S* argv) {
 	argv += optind;
 	P(--argc, usage());
 	P(!cmd, cmd = defaultcmd);
-	t = bstr(*argv, "/", NULL);
+	EQF(t, bstr(*argv, "/", NULL));
 
 	P(fork, daemonize());
 #ifdef __OpenBSD__
@@ -56,7 +56,7 @@ I main(I argc, S* argv) {
 	for (ureq = 1;;) {
 		n = updateimgs(files, t, n);
 		P(!n, EF(ERR("No files found in %s", t)));
-		fp = bstr(t, files[(rand() / (RAND_MAX / n))].name, NULL);
+		EQF(fp, bstr(t, files[(rand() / (RAND_MAX / n))].name, NULL));
 		P(setbg(fp, cmd) < 0, EF({}));
 		free(fp);
 		sleep(rdelay);
