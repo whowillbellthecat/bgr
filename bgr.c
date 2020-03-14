@@ -12,7 +12,7 @@ S bstr(S str, ...) { /* cat arbitrary num of strings; va_list must be null termi
 	R buf;
 }
 I main(I argc, S* argv) {
-	I n = 0, fork = 1, rdelay = 10, logopt = 0; S fp, t, cmd = NULL; C ch; cS err;
+	I n = 0, fork = 1, rdelay = 10, logopt = 0; S fp, t, cmd = NULL; C ch; cS err; IMG *files;
 	while ((ch = getopt(argc, argv, "hc:s:d")) != -1) {
 		SW(ch) {
 			CSW('d', fork = 0; logopt |= LOG_PERROR);
@@ -33,12 +33,10 @@ I main(I argc, S* argv) {
 	pledge("stdio rpath proc exec", NULL);
 #endif
 	openlog("bgr", logopt, LOG_USER);
-
-	IMG *files = calloc(max_files, SZ(IMG));
-
 	signal(sigusr, handlesigusr);
 	srand(time(NULL));
 
+	EQF(files, calloc(max_files, SZ(IMG)), "malloc");
 	for (ureq = 1;;) {
 		EQF(n,updateimgs(files, t, n), "no files match");
 		EQF(fp, bstr(t, files[(rand() / (RAND_MAX / n))].name, NULL), "malloc");
