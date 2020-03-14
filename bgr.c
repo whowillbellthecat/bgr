@@ -26,7 +26,7 @@ I updateimgs(IMG *f, S t, I c) { /*ureq being set implies either first run or go
 	R n;
 }
 I main(I argc, S* argv) {
-	I n = 0, fork = 1, rdelay = 10, logopt = 0; S fp, t, cmd; C ch; cS err;
+	I n = 0, fork = 1, rdelay = 10, logopt = 0; S fp, t, cmd = NULL; C ch; cS err;
 	while ((ch = getopt(argc, argv, "hc:s:d")) != -1) {
 		SW(ch) {
 			CSW('d', fork = 0; logopt |= LOG_PERROR);
