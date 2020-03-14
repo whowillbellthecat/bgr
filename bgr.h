@@ -37,7 +37,7 @@
 #define ES(x) DOEXIT(x, EXIT_SUCCESS)
 #define EF(x) DOEXIT(x, EXIT_FAILURE)
 
-#define EQF(v, e) { v = e; P(!v, EF(O("fault\n"))); }
+#define EQF(v, e, msg) { v = e; P(!v, EF(O("%s\n", msg))); }
 
 #define SW switch
 #define CS(x, y) case x: y

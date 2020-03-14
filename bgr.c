@@ -25,7 +25,7 @@ I main(I argc, S* argv) {
 	argv += optind;
 	P(--argc, usage());
 	P(!cmd, cmd = defaultcmd);
-	EQF(t, bstr(*argv, "/", NULL));
+	EQF(t, bstr(*argv, "/", NULL), "malloc");
 
 	P(fork, daemonize());
 #ifdef __OpenBSD__
@@ -40,9 +40,8 @@ I main(I argc, S* argv) {
 	srand(time(NULL));
 
 	for (ureq = 1;;) {
-		n = updateimgs(files, t, n);
-		P(!n, EF(ERR("No files found in %s", t)));
-		EQF(fp, bstr(t, files[(rand() / (RAND_MAX / n))].name, NULL));
+		EQF(n,updateimgs(files, t, n), "no files match");
+		EQF(fp, bstr(t, files[(rand() / (RAND_MAX / n))].name, NULL), "malloc");
 		P(setbg(fp, cmd) < 0, EF({}));
 		(void)free(fp);
 		(void)sleep(rdelay);
