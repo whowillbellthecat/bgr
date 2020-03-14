@@ -24,5 +24,12 @@ V handlesigusr(I sig) {
 	signal(sigusr, handlesigusr);
 	ureq = 1; errno = e;
 }
+I updateimgs(IMG *f, S t, I c) {
+	I u = ureq, n = c;
+	P(u, n = findimgs(f, t));
+	ureq = 0;
+	P(u, sigprocmask(SIG_UNBLOCK, &sigusr, NULL));
+	R n;
+}
 /* input arg list must be terminated by NULL */
 V uvs(S mode, ...) { VA(mode, {}, unveil(p, mode), S); unveil(NULL,NULL);}

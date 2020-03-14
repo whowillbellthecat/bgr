@@ -11,13 +11,6 @@ S bstr(S str, ...) { /* cat arbitrary num of strings; va_list must be null termi
 	buf[l-1] = '\0';
 	R buf;
 }
-I updateimgs(IMG *f, S t, I c) { /*ureq being set implies either first run or got sigusr1 */
-	I u = ureq, n = c;
-	P(u, n = findimgs(f, t));
-	ureq = 0;
-	P(u, sigprocmask(SIG_UNBLOCK, &sigusr, NULL));
-	R n;
-}
 I main(I argc, S* argv) {
 	I n = 0, fork = 1, rdelay = 10, logopt = 0; S fp, t, cmd = NULL; C ch; cS err;
 	while ((ch = getopt(argc, argv, "hc:s:d")) != -1) {
