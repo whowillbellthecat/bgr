@@ -14,8 +14,7 @@ Z pid_t setbg(S img, S cmd) {
 		CS(-1, EF(ERR("could not fork process: %m")));
 	}
 	wait(&status);
-	ret = WEXITSTATUS(status) ? WIFEXITED(status) : WTERMSIG(status);
-	P(ret != 0, WARN("%s exited with ret %d", cmd, ret));
+	EQC(ret,WEXITSTATUS(status)?WIFEXITED(status):WTERMSIG(status),ret!=0,WARN("%s : ret %d",cmd,ret));
 	R ret;
 }
 V handlesigusr(I sig) {
