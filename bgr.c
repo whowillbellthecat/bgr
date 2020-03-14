@@ -58,8 +58,8 @@ I main(I argc, S* argv) {
 		P(!n, EF(ERR("No files found in %s", t)));
 		EQF(fp, bstr(t, files[(rand() / (RAND_MAX / n))].name, NULL));
 		P(setbg(fp, cmd) < 0, EF({}));
-		free(fp);
-		sleep(rdelay);
+		(void)free(fp);
+		(void)sleep(rdelay);
 	}
 	ES({});
 }
