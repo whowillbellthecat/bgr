@@ -16,7 +16,7 @@ V version() { ES(O("bgr v 1\n")); }
 S bstr(S str, ...) { /* cat arbitrary num of strings; va_list must be null terminated */
 	I l; S buf;
 	VA(str, l=1+strlen(str), l+=strlen(p), S);
-	VA(str, buf=malloc(l); strcpy(buf, str), strcat(buf, p), S);
+	VA(str, buf=malloc(l); U(buf); strcpy(buf, str), strcat(buf, p), S);
 	buf[l-1] = '\0';
 	R buf;
 }
