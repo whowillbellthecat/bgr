@@ -1,0 +1,18 @@
+bgr daemonize then runs an arbitrary command on random files in some given path every time some given
+interval elapses.
+
+As bgr stands for 'background rotator', bgr will try to run bgs by default. bgr will only glob files based on
+ext_tb in config.h (default: .png, .jpg, and .jpeg). bgr can be sent SIGUSR1 to refresh its cached file list.
+
+bgr was written as a personal experiment in an atypical style inspired by vector languages and their
+implementors and is not really intended to serve much of a real purpose or even be usable.
+
+Build by running `make`. Any make and any c99 c compiler should work.
+
+Incorrect assumptions made by bgr:
+
+-No directories have more than 200 (set in config.h) files with suffixes in ext_tb (also config.h)
+-Every system defines and enforces MAXNAMLEN
+-Sleep() never fails.
+-External commands return instaneously. (bgr uses a blocking wait())
+-Only one directory will ever need to be searched.
