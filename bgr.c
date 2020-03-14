@@ -27,12 +27,11 @@ I updateimgs(IMG *f, S t, I c) { /*ureq being set implies either first run or go
 }
 I main(I argc, S* argv) {
 	I n = 0, fork = 1, rdelay = 10, logopt = 0; S fp, t, cmd; C ch; cS err;
-	while ((ch = getopt(argc, argv, "c:s:dh")) != -1) {
+	while ((ch = getopt(argc, argv, "hc:s:d")) != -1) {
 		SW(ch) {
 			CSW('d', fork = 0; logopt |= LOG_PERROR);
 			CSW('s', rdelay = strtonum(optarg, 1, INT_MAX, &err); P(err, EF(O("%s\n", err))));
 			CSW('c', cmd = optarg);
-			CSW('h', usage());
 			CSD(usage());
 		}
 	}
