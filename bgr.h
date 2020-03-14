@@ -40,7 +40,7 @@
 #define CSW(x, y) case x: y; break
 #define CSD(x) default: x
 
-#define VA(x, i, z, t) {t p;va_list ap;va_start(ap, x);i;while((p = va_arg(ap, t)) != NULL)z;va_end(ap);}
+#define VA(x, i, z, t) {t p;va_list ap;va_start(ap, x);i;while((p = va_arg(ap, t)) != NULL){z;};va_end(ap);}
 
 typedef struct IMG { unsigned char name[MAXNAMLEN + 1]; } IMG;
 typedef char C;
