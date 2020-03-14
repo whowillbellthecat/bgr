@@ -37,16 +37,10 @@
 #define ES(x) DOEXIT(x, EXIT_SUCCESS)
 #define EF(x) DOEXIT(x, EXIT_FAILURE)
 
-#define DOT(x,...) x(DOT(__VA_ARGS__))
-
 #define SW switch
 #define CS(x, y) case x: y
 #define CSW(x, y) case x: y; break
 #define CSD(x) default: x
-
-#define CAT(x,y) strlcat(x, y, SZ(x))
-#define CPY(x,y) strlcpy(x, y, SZ(x))
-#define UV unveil
 
 #define VA(x, i, z, t) {t p;va_list ap;va_start(ap, x);i;while((p = va_arg(ap, t)) != NULL)z;va_end(ap);}
 

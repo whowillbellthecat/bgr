@@ -18,4 +18,4 @@ V handlesigusr(I sig) {
 	ureq = 1; errno = e;
 }
 /* input arg list must be terminated by NULL */
-V uvs(S mode, ...) { VA(mode, {}, UV(p, mode), S); UV(NULL,NULL);}
+V uvs(S mode, ...) { VA(mode, {}, unveil(p, mode), S); unveil(NULL,NULL);}
