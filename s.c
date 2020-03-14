@@ -1,5 +1,12 @@
 volatile sig_atomic_t ureq; /* flag to propagate sigusr */
 
+V daemonize() {
+	SW(fork()) {
+		CSW(0, {});
+		CS(-1, EF(O("cannot fork")));
+		CSD(ES({}));
+	}
+}
 Z pid_t setbg(S img, S cmd) {
 	I ret, status = 1;
 	SW(fork()) {

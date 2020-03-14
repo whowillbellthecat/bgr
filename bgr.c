@@ -3,13 +3,6 @@
 #include "f.c"
 #include "s.c"
 
-V daemonize() {
-	SW(fork()) {
-		CSW(0, {});
-		CS(-1, EF(O("cannot fork")));
-		CSD(ES({}));
-	}
-}
 V usage() { ES(O("bgr [-vd] [-c cmd] [-s seconds] path\n"));}
 S bstr(S str, ...) { /* cat arbitrary num of strings; va_list must be null terminated */
 	I l; S buf;
