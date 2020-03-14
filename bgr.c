@@ -11,8 +11,6 @@ V daemonize() {
 	}
 }
 V usage() { ES(O("bgr [-vd] [-c cmd] [-s seconds] path\n"));}
-V version() { ES(O("bgr v 1\n")); }
-
 S bstr(S str, ...) { /* cat arbitrary num of strings; va_list must be null terminated */
 	I l; S buf;
 	VA(str, l=1+strlen(str), l+=strlen(p), S);
@@ -29,9 +27,8 @@ I updateimgs(IMG *f, S t, I c) { /*ureq being set implies either first run or go
 }
 I main(I argc, S* argv) {
 	I n = 0, fork = 1, rdelay = 10, logopt = 0; S fp, t, cmd; C ch; cS err;
-	while ((ch = getopt(argc, argv, "c:s:vdh")) != -1) {
+	while ((ch = getopt(argc, argv, "c:s:dh")) != -1) {
 		SW(ch) {
-			CS('v', version());
 			CSW('d', fork = 0; logopt |= LOG_PERROR);
 			CSW('s', rdelay = strtonum(optarg, 1, INT_MAX, &err); P(err, EF(O("%s\n", err))));
 			CSW('c', cmd = optarg);
